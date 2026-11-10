@@ -6,37 +6,35 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.6</version> <!-- Versión estable y segura de la línea 3.0.x -->
+		<!-- 3.5.x soporta Java 17 a 25 (tu script.bat usa JDK 25) -->
+		<version>3.5.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>co.edu.unicauca.distribuidos</groupId>
-	<artifactId>proyecto_api_rest_cliente</artifactId>
+	<groupId>co.edu.unicauca.labsw3</groupId>
+	<artifactId>backend-piedra-azul</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>proyecto_api_rest_cliente</name>
-	<description>Demo project for Spring Boot</description>
+	<name>backend-piedra-azul</name>
+	<description>Backend de citas medicas - Parcial 2 Lab Ing Software III</description>
 
 	<properties>
 		<java.version>17</java.version>
+		<!-- Lombok 1.18.40+ es necesario para compilar con JDK 25 -->
+		<lombok.version>1.18.42</lombok.version>
 	</properties>
 
 	<dependencies>
-		<!-- Spring Boot Starters Principales -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId> <!-- NUEVA -->
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId> <!-- NUEVA -->
+			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -49,23 +47,24 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- Base de Datos (MySQL) -->
+		<!--
+			Los datos estan en memoria, por eso JPA y MySQL estan desactivados.
+			Si luego pasan a base de datos, descomenten esto y la conexion en application.properties.
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		-->
 
-		<!-- Herramientas de Terceros -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.modelmapper</groupId>
-			<artifactId>modelmapper</artifactId>
-			<version>3.1.1</version>
 		</dependency>
 
 		<!-- JSON Web Tokens (JJWT) -->
@@ -87,7 +86,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Entorno de Pruebas -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -100,12 +98,33 @@
 		</dependency>
 	</dependencies>
 
-
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<!-- Desde JDK 23 Lombok no se ejecuta si no se declara aqui -->
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,54 +1,40 @@
 package co.edu.unicauca.labsw3.core.capaServices.DTO.request;
 
-import java.util.Set;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import jakarta.validation.constraints.*;
-
+/**
+ * Datos comunes para registrar cualquier usuario.
+ * El rol NO viene del cliente: lo asigna el servidor según el endpoint
+ * (paciente, médico), así nadie puede registrarse como ADMIN.
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class SignupRequestDTO {
-    @NotBlank
-    @Size(min = 3, max = 20)
-    private String username;
+    @NotNull(message = "La cédula es obligatoria")
+    @Positive(message = "La cédula debe ser un número positivo")
+    private Long cedula;
 
-    @NotBlank
-    @Size(max = 50)
-    @Email
+    @NotBlank(message = "El email es obligatorio")
+    @Email(message = "El email no tiene un formato válido")
     private String email;
 
-    private Set<String> role;
+    @NotBlank(message = "El nombre es obligatorio")
+    private String nombre;
 
-    @NotBlank
-    @Size(min = 6, max = 40)
+    @NotBlank(message = "El apellido es obligatorio")
+    private String apellido;
+
+    @NotBlank(message = "La contraseña es obligatoria")
+    @Size(min = 6, message = "La contraseña debe tener mínimo 6 caracteres")
     private String password;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<String> getRole() {
-        return this.role;
-    }
-
-    public void setRole(Set<String> role) {
-        this.role = role;
-    }
 }

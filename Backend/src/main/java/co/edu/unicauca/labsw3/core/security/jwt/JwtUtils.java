@@ -48,7 +48,7 @@ public class JwtUtils {
 
     public boolean validateJwtToken(String authToken) {
         try {
-            System.out.println( "Validando token JWT: " + authToken);
+            System.out.println("Validando token JWT: " + authToken);
             Jwts.parserBuilder().setSigningKey(key()).build().parse(authToken);
             return true;
         } catch (MalformedJwtException e) {
