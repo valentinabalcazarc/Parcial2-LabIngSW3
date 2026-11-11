@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.auth {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--color-surface-alt);
+}
+
+/* Centra la tarjeta vertical y horizontalmente */
+.auth__main {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  padding: var(--space-8) var(--space-4);
+}
+
+.auth__box {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  align-items: center;
+  width: 100%;
+  max-width: 28rem;
+  animation: auth-in 250ms ease both;
+}
+
+.auth__card {
+  width: 100%;
+}
+
+@keyframes auth-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

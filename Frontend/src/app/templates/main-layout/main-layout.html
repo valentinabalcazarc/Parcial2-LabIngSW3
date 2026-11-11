@@ -1,0 +1,11 @@
+<div class="layout">
+  <app-header [user]="user()" (login)="login.emit()" (logout)="logout.emit()" />
+
+  <main class="layout__main" id="contenido">
+    <div class="layout__container">
+      <ng-content />
+    </div>
+  </main>
+
+  <app-footer [role]="role()" />
+</div>

@@ -9,11 +9,11 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormField } from '../../../shared/common';
-import { Button, Card, FormError, InputText } from '../../../shared/ui';
+import { Button, FormError, InputText } from '../../../shared/ui';
 import { LoginCredentials } from '../models/auth.model';
 
 @Component({
-  imports: [ReactiveFormsModule, FormField, Card, Button, FormError, InputText],
+  imports: [ReactiveFormsModule, FormField, Button, FormError, InputText],
   selector: 'app-login-form',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
