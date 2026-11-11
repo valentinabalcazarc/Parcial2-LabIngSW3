@@ -1,5 +1,5 @@
 <main class="preview">
-  <app-heading [level]="1">Catálogo de átomos</app-heading>
+  <app-heading [level]="1">Catálogo de átomos y moléculas</app-heading>
 
   <section class="preview__section">
     <app-heading [level]="2">Logo</app-heading>
@@ -65,25 +65,16 @@
       <form class="form" (submit)="$event.preventDefault()">
         <div class="field">
           <app-label for="cedula" [required]="true">Cédula</app-label>
-          <app-input-text
-            inputId="cedula"
-            placeholder="Ej. 1061234567"
-            describedBy="cedula-error"
-            [formControl]="cedula"
-            [invalid]="cedula.invalid && cedula.touched"
-          />
+          <app-input-text inputId="cedula" placeholder="Ej. 1061234567" describedBy="cedula-error"
+            [formControl]="cedula" [invalid]="cedula.invalid && cedula.touched" />
           @if (cedula.invalid && cedula.touched) {
-            <app-form-error id="cedula-error">La cédula debe tener al menos 6 caracteres.</app-form-error>
+          <app-form-error id="cedula-error">La cédula debe tener al menos 6 caracteres.</app-form-error>
           }
         </div>
         <div class="field">
           <app-label for="especialidad" [required]="true">Especialidad</app-label>
-          <app-select
-            inputId="especialidad"
-            [options]="especialidades"
-            [formControl]="especialidad"
-            [invalid]="especialidad.invalid && especialidad.touched"
-          />
+          <app-select inputId="especialidad" [options]="especialidades" [formControl]="especialidad"
+            [invalid]="especialidad.invalid && especialidad.touched" />
         </div>
         <div class="field">
           <app-label for="motivo">Motivo de la cita</app-label>
@@ -105,13 +96,61 @@
   </section>
 
   <section class="preview__section">
+    <app-heading [level]="2">Moléculas</app-heading>
+
+    <app-page-header title="Médicos" description="Profesionales de la clínica Piedra Azul">
+      <app-button slot="actions" type="button" [fullWidth]="true">
+        <app-icon name="plus" [size]="18" />
+        Nuevo médico
+      </app-button>
+    </app-page-header>
+
+    <app-card>
+      <form class="form" (submit)="$event.preventDefault()">
+        <app-form-field label="Cédula (prueba con 1234567)" inputId="cedula-demo" hint="Solo dígitos, mínimo 6."
+          [control]="cedulaAsync" [required]="true" [messages]="mensajesCedula">
+          <app-input-text inputId="cedula-demo" describedBy="cedula-demo-hint cedula-demo-error"
+            [formControl]="cedulaAsync" [invalid]="cedulaAsync.invalid && cedulaAsync.touched" />
+        </app-form-field>
+
+        <app-form-field label="Especialidad" inputId="especialidad-demo" [control]="especialidad" [required]="true">
+          <app-select inputId="especialidad-demo" describedBy="especialidad-demo-error" [options]="especialidades"
+            [formControl]="especialidad" [invalid]="especialidad.invalid && especialidad.touched" />
+        </app-form-field>
+
+        <app-form-field label="Motivo de la cita" inputId="motivo-demo" [control]="motivo">
+          <app-textarea inputId="motivo-demo" [formControl]="motivo" />
+        </app-form-field>
+      </form>
+    </app-card>
+
+    <app-table-with-title title="Mis citas" [columns]="columnas" [rows]="citas">
+      <app-button slot="actions" type="button" size="sm" label="Nueva cita" />
+      <ng-template appTableCell="estado" let-row>
+        <app-badge [tone]="tono(row.estado)">{{ row.estado }}</app-badge>
+      </ng-template>
+    </app-table-with-title>
+    <app-table-with-title title="Cargando…" [columns]="columnas" [loading]="true" />
+
+    <div class="row">
+      <app-nav-item to="/" label="Inicio" icon="home" [exact]="true" />
+      <app-nav-item to="/medicos" label="Médicos" icon="stethoscope" />
+      <app-nav-item to="/mis-citas" label="Mis citas" icon="calendar" />
+    </div>
+    <div class="row">
+      <app-user-chip name="Laura Ríos" role="patient" />
+      <app-user-chip name="Andrés Mora" role="admin" />
+    </div>
+  </section>
+
+  <section class="preview__section">
     <app-heading [level]="2">Íconos</app-heading>
     <div class="icons">
       @for (name of iconNames; track name) {
-        <div class="icons__item">
-          <app-icon [name]="name" [size]="24" />
-          <span>{{ name }}</span>
-        </div>
+      <div class="icons__item">
+        <app-icon [name]="name" [size]="24" />
+        <span>{{ name }}</span>
+      </div>
       }
     </div>
   </section>

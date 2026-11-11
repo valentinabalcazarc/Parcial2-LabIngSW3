@@ -24,10 +24,22 @@ export class Table<T = unknown> {
   readonly caption = input<string>('');
   readonly emptyMessage = input<string>('No hay registros para mostrar.');
 
+  /**
+   * Celdas personalizadas declaradas fuera de la tabla. Lo usan las moléculas que la envuelven
+   * (p. ej. table-with-title): sus `appTableCell` no son hijos directos de <app-table>,
+   * así que la molécula los recoge y los reenvía por este input.
+   */
+  readonly cells = input<readonly TableCell[]>([]);
+
   private readonly customCells = contentChildren(TableCell, { descendants: true });
 
   protected readonly cellTemplates = computed(
-    () => new Map(this.customCells().map((cell) => [cell.key(), cell.template] as const)),
+    () =>
+      new Map(
+        [...this.customCells(), ...this.cells()].map(
+          (cell) => [cell.key(), cell.template] as const,
+        ),
+      ),
   );
 
   protected cellText(row: T, column: TableColumn<T>): string {

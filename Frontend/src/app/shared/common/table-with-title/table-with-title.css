@@ -1,0 +1,39 @@
+:host {
+  display: block;
+}
+
+.table-with-title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.table-with-title__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.table-with-title__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Sin acciones proyectadas no ocupa espacio */
+.table-with-title__actions:empty {
+  display: none;
+}
+
+.table-with-title__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 12rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}

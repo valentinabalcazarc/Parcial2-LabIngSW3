@@ -1,1 +1,21 @@
-<p>form-field works!</p>
+<div class="form-field">
+  <div class="form-field__header">
+    <app-label [for]="inputId()" [required]="required()">{{ label() }}</app-label>
+    @if (pending()) {
+      <span class="form-field__pending">
+        <app-spinner size="sm" label="Verificando…" />
+        <span aria-hidden="true">Verificando…</span>
+      </span>
+    }
+  </div>
+
+  <ng-content />
+
+  @if (hint()) {
+    <p class="form-field__hint" [attr.id]="hintId()">{{ hint() }}</p>
+  }
+
+  @if (errorMessage(); as message) {
+    <app-form-error [attr.id]="errorId()">{{ message }}</app-form-error>
+  }
+</div>

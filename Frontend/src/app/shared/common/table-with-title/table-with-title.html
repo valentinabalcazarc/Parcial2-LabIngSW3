@@ -1,0 +1,22 @@
+<section class="table-with-title">
+  <header class="table-with-title__header">
+    <app-heading [level]="2" size="3">{{ title() }}</app-heading>
+    <div class="table-with-title__actions">
+      <ng-content select="[slot=actions]" />
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="table-with-title__loading" aria-busy="true">
+      <app-spinner size="lg" label="Cargando datos…" />
+    </div>
+  } @else {
+    <app-table
+      [columns]="columns()"
+      [rows]="rows()"
+      [caption]="tableCaption()"
+      [emptyMessage]="emptyMessage()"
+      [cells]="cells()"
+    />
+  }
+</section>

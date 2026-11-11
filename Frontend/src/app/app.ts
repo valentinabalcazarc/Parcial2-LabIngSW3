@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { map, timer } from 'rxjs';
+import { FormField, NavItem, PageHeader, TableWithTitle, UserChip } from './shared/common';
 import {
   Badge,
   BadgeTone,
@@ -30,8 +32,12 @@ interface Cita {
   estado: 'Programada' | 'Completada' | 'Cancelada';
 }
 
+/** Simula la consulta asíncrona de cédula: la "1234567" ya existe. */
+const cedulaDisponible = (control: AbstractControl) =>
+  timer(900).pipe(map(() => (control.value === '1234567' ? { cedulaTaken: true } : null)));
+
 /**
- * Vista TEMPORAL para revisar los átomos en el navegador.
+ * Vista TEMPORAL para revisar átomos y moléculas en el navegador.
  * Cuando existan las plantillas y páginas, reemplaza app.html por <router-outlet />.
  */
 @Component({
@@ -41,17 +47,22 @@ interface Cita {
     Button,
     Card,
     FormError,
+    FormField,
     Heading,
     Icon,
     InputText,
     Label,
     Link,
     Logo,
+    NavItem,
+    PageHeader,
     Select,
     Spinner,
     Table,
     TableCell,
+    TableWithTitle,
     Textarea,
+    UserChip,
   ],
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -65,6 +76,15 @@ export class App {
     nonNullable: true,
     validators: [Validators.required, Validators.minLength(6)],
   });
+  protected readonly cedulaAsync = new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.required, Validators.minLength(6)],
+    asyncValidators: [cedulaDisponible],
+  });
+  protected readonly mensajesCedula = {
+    required: 'La cédula es obligatoria.',
+    cedulaTaken: 'Ya existe un registro con esta cédula.',
+  };
   protected readonly especialidad = new FormControl<string | number | null>(null, [
     Validators.required,
   ]);
