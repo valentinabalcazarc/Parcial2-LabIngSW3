@@ -1,0 +1,19 @@
+<app-table-with-title
+  [title]="heading()"
+  [columns]="columns()"
+  [rows]="professionals()"
+  [loading]="loading()"
+  [emptyMessage]="emptyMessage()"
+>
+  @if (creatable()) {
+    <app-button slot="actions" type="button" label="Nuevo médico" (click)="create.emit()" />
+  }
+
+  <ng-template appTableCell="especialidad" let-row>
+    @if (row.especialidad) {
+      <app-badge>{{ row.especialidad }}</app-badge>
+    } @else {
+      —
+    }
+  </ng-template>
+</app-table-with-title>

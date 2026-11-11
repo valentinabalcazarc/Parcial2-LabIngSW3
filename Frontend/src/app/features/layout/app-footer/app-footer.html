@@ -1,0 +1,54 @@
+<footer class="footer">
+  <div class="footer__inner">
+    @if (!minimal()) {
+      <div class="footer__main">
+        <app-logo [inverted]="true" />
+
+        <div class="footer__grid">
+          <section aria-labelledby="footer-contact">
+            <h2 class="footer__title" id="footer-contact">Contacto</h2>
+            <ul class="footer__list">
+              <li class="footer__item">
+                <app-icon name="phone" [size]="18" />
+                <a [href]="phoneHref()">{{ info().phone }}</a>
+              </li>
+              <li class="footer__item">
+                <app-icon name="mail" [size]="18" />
+                <a [href]="emailHref()">{{ info().email }}</a>
+              </li>
+              <li class="footer__item">
+                <app-icon name="map-pin" [size]="18" />
+                <span>{{ info().address }}</span>
+              </li>
+            </ul>
+          </section>
+
+          <section aria-labelledby="footer-schedule">
+            <h2 class="footer__title" id="footer-schedule">Horario de atención</h2>
+            <ul class="footer__list">
+              @for (line of info().schedule; track line) {
+                <li class="footer__item">
+                  <app-icon name="clock" [size]="18" />
+                  <span>{{ line }}</span>
+                </li>
+              }
+            </ul>
+          </section>
+
+          <nav aria-labelledby="footer-links">
+            <h2 class="footer__title" id="footer-links">Enlaces rápidos</h2>
+            <ul class="footer__list footer__links">
+              @for (link of links(); track link.route) {
+                <li><app-link [to]="link.route">{{ link.label }}</app-link></li>
+              }
+            </ul>
+          </nav>
+        </div>
+      </div>
+    }
+
+    <div class="footer__legal">
+      <p>© {{ year }} Clínica Piedra Azul. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>

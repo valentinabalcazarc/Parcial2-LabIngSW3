@@ -1,0 +1,130 @@
+<app-card padding="lg">
+  <form
+    class="form"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    novalidate
+    aria-label="Formulario de médico"
+  >
+    <div class="form__grid">
+      <app-form-field
+        label="Cédula"
+        inputId="professional-cedula"
+        required
+        [control]="form.controls.cedula"
+        [messages]="cedulaMessages"
+      >
+        <app-input-text
+          inputId="professional-cedula"
+          formControlName="cedula"
+          autocomplete="off"
+          describedBy="professional-cedula-error"
+          [invalid]="invalid(form.controls.cedula)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Nombres"
+        inputId="professional-nombres"
+        required
+        [control]="form.controls.nombres"
+        [messages]="nombresMessages"
+      >
+        <app-input-text
+          inputId="professional-nombres"
+          formControlName="nombres"
+          autocomplete="given-name"
+          describedBy="professional-nombres-error"
+          [invalid]="invalid(form.controls.nombres)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Apellidos"
+        inputId="professional-apellidos"
+        required
+        [control]="form.controls.apellidos"
+        [messages]="apellidosMessages"
+      >
+        <app-input-text
+          inputId="professional-apellidos"
+          formControlName="apellidos"
+          autocomplete="family-name"
+          describedBy="professional-apellidos-error"
+          [invalid]="invalid(form.controls.apellidos)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Especialidad"
+        inputId="professional-especialidad"
+        required
+        [control]="form.controls.especialidad"
+        [messages]="especialidadMessages"
+      >
+        <app-select
+          inputId="professional-especialidad"
+          formControlName="especialidad"
+          placeholder="Seleccione una especialidad"
+          describedBy="professional-especialidad-error"
+          [options]="specialties()"
+          [invalid]="invalid(form.controls.especialidad)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Teléfono"
+        inputId="professional-telefono"
+        required
+        [control]="form.controls.telefono"
+        [messages]="phoneMessages"
+      >
+        <app-input-text
+          inputId="professional-telefono"
+          type="tel"
+          formControlName="telefono"
+          autocomplete="tel"
+          describedBy="professional-telefono-error"
+          [invalid]="invalid(form.controls.telefono)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Correo electrónico"
+        inputId="professional-correo"
+        required
+        [control]="form.controls.correo"
+        [messages]="correoMessages"
+      >
+        <app-input-text
+          inputId="professional-correo"
+          type="email"
+          formControlName="correo"
+          autocomplete="email"
+          describedBy="professional-correo-error"
+          [invalid]="invalid(form.controls.correo)"
+        />
+      </app-form-field>
+    </div>
+
+    @if (errorMessage()) {
+      <app-form-error>{{ errorMessage() }}</app-form-error>
+    }
+
+    <div class="form__actions">
+      <app-button
+        type="button"
+        color="secondary"
+        label="Cancelar"
+        [disabled]="loading()"
+        (click)="cancelled.emit()"
+      />
+      <app-button
+        type="submit"
+        [label]="submitLabel()"
+        [loading]="loading()"
+        [disabled]="!canSubmit()"
+      />
+    </div>
+  </form>
+</app-card>

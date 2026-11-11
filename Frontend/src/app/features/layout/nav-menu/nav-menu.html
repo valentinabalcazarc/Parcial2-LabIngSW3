@@ -1,0 +1,14 @@
+<nav aria-label="Navegación principal">
+  <ul class="nav-menu">
+    @for (item of items(); track item.route) {
+      <li>
+        <app-nav-item
+          [to]="item.route"
+          [label]="item.label"
+          [icon]="item.icon"
+          (click)="itemSelected.emit()"
+        />
+      </li>
+    }
+  </ul>
+</nav>

@@ -1,0 +1,21 @@
+:host {
+  display: block;
+}
+
+/* Vertical en móvil (dentro del panel del header); en línea desde 48 rem */
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48rem) {
+  .nav-menu {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-2);
+  }
+}

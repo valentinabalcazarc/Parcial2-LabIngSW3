@@ -1,0 +1,114 @@
+<app-card padding="lg">
+  <form
+    class="form"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    novalidate
+    aria-label="Formulario de cita"
+  >
+    <div class="form__grid">
+      <app-form-field
+        label="Paciente"
+        inputId="appointment-paciente"
+        required
+        [control]="form.controls.pacienteId"
+        [messages]="pacienteMessages"
+      >
+        <app-select
+          inputId="appointment-paciente"
+          formControlName="pacienteId"
+          placeholder="Seleccione un paciente"
+          describedBy="appointment-paciente-error"
+          [options]="patients()"
+          [invalid]="invalid(form.controls.pacienteId)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Médico"
+        inputId="appointment-medico"
+        required
+        [control]="form.controls.medicoId"
+        [messages]="medicoMessages"
+      >
+        <app-select
+          inputId="appointment-medico"
+          formControlName="medicoId"
+          placeholder="Seleccione un médico"
+          describedBy="appointment-medico-error"
+          [options]="professionals()"
+          [invalid]="invalid(form.controls.medicoId)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Fecha"
+        inputId="appointment-fecha"
+        required
+        [control]="form.controls.fecha"
+        [messages]="fechaMessages"
+      >
+        <app-input-text
+          inputId="appointment-fecha"
+          type="date"
+          formControlName="fecha"
+          describedBy="appointment-fecha-error"
+          [invalid]="invalid(form.controls.fecha)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Hora"
+        inputId="appointment-hora"
+        required
+        [control]="form.controls.hora"
+        [messages]="horaMessages"
+      >
+        <app-input-text
+          inputId="appointment-hora"
+          type="time"
+          formControlName="hora"
+          describedBy="appointment-hora-error"
+          [invalid]="invalid(form.controls.hora)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        class="form__field--full"
+        label="Motivo de la cita"
+        inputId="appointment-motivo"
+        required
+        [control]="form.controls.motivo"
+        [messages]="motivoMessages"
+      >
+        <app-textarea
+          inputId="appointment-motivo"
+          formControlName="motivo"
+          placeholder="Describa brevemente el motivo de la consulta"
+          describedBy="appointment-motivo-error"
+          [invalid]="invalid(form.controls.motivo)"
+        />
+      </app-form-field>
+    </div>
+
+    @if (errorMessage()) {
+      <app-form-error>{{ errorMessage() }}</app-form-error>
+    }
+
+    <div class="form__actions">
+      <app-button
+        type="button"
+        color="secondary"
+        label="Cancelar"
+        [disabled]="loading()"
+        (click)="cancelled.emit()"
+      />
+      <app-button
+        type="submit"
+        [label]="submitLabel()"
+        [loading]="loading()"
+        [disabled]="!canSubmit()"
+      />
+    </div>
+  </form>
+</app-card>

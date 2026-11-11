@@ -1,0 +1,91 @@
+:host {
+  display: block;
+}
+
+.footer {
+  color: var(--color-border);
+  background: var(--color-ink);
+}
+
+.footer__inner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+.footer__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-block: var(--space-10) var(--space-8);
+}
+
+/* 1 columna en móvil, 3 desde 48 rem */
+.footer__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+}
+
+.footer__title {
+  margin-bottom: var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.08em;
+  color: var(--color-surface);
+  text-transform: uppercase;
+}
+
+.footer__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.footer a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+.footer a:hover {
+  color: var(--color-surface);
+}
+
+.footer a:focus-visible {
+  outline-color: var(--color-surface);
+}
+
+/* El átomo link es índigo; sobre fondo oscuro se reasignan sus variables (heredan al <a>) */
+.footer__links app-link {
+  --color-primary: var(--color-border);
+  --color-primary-hover: var(--color-surface);
+  --focus-ring: 0 0 0 3px rgba(245, 243, 255, 0.6);
+  font-size: var(--text-sm);
+}
+
+.footer__legal {
+  padding-block: var(--space-4);
+  font-size: var(--text-xs);
+  text-align: center;
+  border-top: 1px solid var(--color-primary-hover);
+}
+
+@media (min-width: 48rem) {
+  .footer__inner {
+    padding-inline: var(--space-6);
+  }
+
+  .footer__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

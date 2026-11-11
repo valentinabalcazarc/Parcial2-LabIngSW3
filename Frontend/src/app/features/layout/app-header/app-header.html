@@ -1,0 +1,40 @@
+<header class="header">
+  <div class="header__bar">
+    <app-link class="header__brand" to="/" (click)="close()">
+      <app-logo />
+    </app-link>
+
+    <button
+      #menuButton
+      type="button"
+      class="header__toggle"
+      aria-controls="header-panel"
+      [attr.aria-expanded]="open()"
+      [attr.aria-label]="open() ? 'Cerrar menú' : 'Abrir menú'"
+      (click)="toggle()"
+    >
+      <app-icon [name]="open() ? 'x' : 'menu'" [size]="24" />
+    </button>
+  </div>
+
+  <div class="header__panel" id="header-panel" [class.is-open]="open()">
+    <div class="header__nav">
+      <app-nav-menu [role]="role()" (itemSelected)="close()" />
+    </div>
+
+    <div class="header__session">
+      @if (user(); as current) {
+        <app-user-chip [name]="current.name" [role]="current.role" />
+        <app-button type="button" color="ghost" (click)="onLogout()">
+          <app-icon name="log-out" [size]="18" />
+          Cerrar sesión
+        </app-button>
+      } @else {
+        <app-button type="button" (click)="onLogin()">
+          <app-icon name="log-in" [size]="18" />
+          Iniciar sesión
+        </app-button>
+      }
+    </div>
+  </div>
+</header>

@@ -1,0 +1,55 @@
+<app-card padding="lg">
+  <form
+    class="form"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    novalidate
+    aria-label="Inicio de sesión"
+  >
+    <app-form-field
+      label="Correo electrónico"
+      inputId="login-correo"
+      required
+      [control]="form.controls.correo"
+      [messages]="correoMessages"
+    >
+      <app-input-text
+        inputId="login-correo"
+        type="email"
+        formControlName="correo"
+        autocomplete="email"
+        describedBy="login-correo-error"
+        [invalid]="invalid(form.controls.correo)"
+      />
+    </app-form-field>
+
+    <app-form-field
+      label="Contraseña"
+      inputId="login-password"
+      required
+      [control]="form.controls.password"
+      [messages]="passwordMessages"
+    >
+      <app-input-text
+        inputId="login-password"
+        type="password"
+        formControlName="password"
+        autocomplete="current-password"
+        describedBy="login-password-error"
+        [invalid]="invalid(form.controls.password)"
+      />
+    </app-form-field>
+
+    @if (errorMessage()) {
+      <app-form-error>{{ errorMessage() }}</app-form-error>
+    }
+
+    <app-button
+      type="submit"
+      label="Iniciar sesión"
+      [fullWidth]="true"
+      [loading]="loading()"
+      [disabled]="!canSubmit()"
+    />
+  </form>
+</app-card>

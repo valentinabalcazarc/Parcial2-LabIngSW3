@@ -1,0 +1,19 @@
+<app-table-with-title
+  [title]="heading()"
+  [columns]="columns()"
+  [rows]="appointments()"
+  [loading]="loading()"
+  [emptyMessage]="emptyMessage()"
+>
+  @if (creatable()) {
+    <app-button slot="actions" type="button" label="Nueva cita" (click)="create.emit()" />
+  }
+
+  <ng-template appTableCell="estado" let-row>
+    @if (row.estado) {
+      <app-badge [tone]="tone(row.estado)">{{ row.estado }}</app-badge>
+    } @else {
+      —
+    }
+  </ng-template>
+</app-table-with-title>

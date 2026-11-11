@@ -1,0 +1,11 @@
+<app-table-with-title
+  [title]="title()"
+  [columns]="columns"
+  [rows]="patients()"
+  [loading]="loading()"
+  [emptyMessage]="emptyMessage()"
+>
+  @if (creatable()) {
+    <app-button slot="actions" type="button" label="Nuevo paciente" (click)="create.emit()" />
+  }
+</app-table-with-title>

@@ -1,0 +1,148 @@
+<app-card padding="lg">
+  <form
+    class="form"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    novalidate
+    aria-label="Formulario de paciente"
+  >
+    <div class="form__grid">
+      <app-form-field
+        label="Cédula"
+        inputId="patient-cedula"
+        required
+        [control]="form.controls.cedula"
+        [messages]="cedulaMessages"
+      >
+        <app-input-text
+          inputId="patient-cedula"
+          formControlName="cedula"
+          autocomplete="off"
+          describedBy="patient-cedula-error"
+          [invalid]="invalid(form.controls.cedula)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Nombres"
+        inputId="patient-nombres"
+        required
+        [control]="form.controls.nombres"
+        [messages]="nombresMessages"
+      >
+        <app-input-text
+          inputId="patient-nombres"
+          formControlName="nombres"
+          autocomplete="given-name"
+          describedBy="patient-nombres-error"
+          [invalid]="invalid(form.controls.nombres)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Apellidos"
+        inputId="patient-apellidos"
+        required
+        [control]="form.controls.apellidos"
+        [messages]="apellidosMessages"
+      >
+        <app-input-text
+          inputId="patient-apellidos"
+          formControlName="apellidos"
+          autocomplete="family-name"
+          describedBy="patient-apellidos-error"
+          [invalid]="invalid(form.controls.apellidos)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Fecha de nacimiento"
+        inputId="patient-nacimiento"
+        required
+        [control]="form.controls.fechaNacimiento"
+        [messages]="nacimientoMessages"
+      >
+        <app-input-text
+          inputId="patient-nacimiento"
+          type="date"
+          formControlName="fechaNacimiento"
+          autocomplete="bday"
+          describedBy="patient-nacimiento-error"
+          [invalid]="invalid(form.controls.fechaNacimiento)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Teléfono"
+        inputId="patient-telefono"
+        required
+        [control]="form.controls.telefono"
+        [messages]="phoneMessages"
+      >
+        <app-input-text
+          inputId="patient-telefono"
+          type="tel"
+          formControlName="telefono"
+          autocomplete="tel"
+          describedBy="patient-telefono-error"
+          [invalid]="invalid(form.controls.telefono)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Correo electrónico"
+        inputId="patient-correo"
+        required
+        [control]="form.controls.correo"
+        [messages]="correoMessages"
+      >
+        <app-input-text
+          inputId="patient-correo"
+          type="email"
+          formControlName="correo"
+          autocomplete="email"
+          describedBy="patient-correo-error"
+          [invalid]="invalid(form.controls.correo)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Contraseña inicial"
+        inputId="patient-password"
+        required
+        hint="El paciente la usará para iniciar sesión."
+        [control]="form.controls.password"
+        [messages]="passwordMessages"
+      >
+        <app-input-text
+          inputId="patient-password"
+          type="password"
+          formControlName="password"
+          autocomplete="new-password"
+          describedBy="patient-password-hint patient-password-error"
+          [invalid]="invalid(form.controls.password)"
+        />
+      </app-form-field>
+    </div>
+
+    @if (errorMessage()) {
+      <app-form-error>{{ errorMessage() }}</app-form-error>
+    }
+
+    <div class="form__actions">
+      <app-button
+        type="button"
+        color="secondary"
+        label="Cancelar"
+        [disabled]="loading()"
+        (click)="cancelled.emit()"
+      />
+      <app-button
+        type="submit"
+        [label]="submitLabel()"
+        [loading]="loading()"
+        [disabled]="!canSubmit()"
+      />
+    </div>
+  </form>
+</app-card>
