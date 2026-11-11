@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+.heading {
+  margin: 0;
+  color: var(--color-ink);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.01em;
+}
+
+.heading[data-size='1'] {
+  font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+}
+.heading[data-size='2'] {
+  font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.625rem);
+}
+.heading[data-size='3'] {
+  font-size: var(--text-xl);
+}
+.heading[data-size='4'] {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+.heading[data-align='center'] {
+  text-align: center;
+}

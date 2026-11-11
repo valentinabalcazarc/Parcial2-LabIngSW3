@@ -1,0 +1,46 @@
+:host {
+  display: inline-flex;
+}
+
+.spinner {
+  display: inline-flex;
+}
+
+.spinner__ring {
+  display: block;
+  border-style: solid;
+  border-color: var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  animation: spinner-rotate 0.8s linear infinite;
+}
+
+.spinner[data-size='sm'] .spinner__ring {
+  width: 1rem;
+  height: 1rem;
+  border-width: 2px;
+}
+.spinner[data-size='md'] .spinner__ring {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-width: 3px;
+}
+.spinner[data-size='lg'] .spinner__ring {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-width: 4px;
+}
+
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* El spinner comunica "cargando": con menos movimiento gira más lento, pero no se detiene */
+@media (prefers-reduced-motion: reduce) {
+  .spinner__ring {
+    animation-duration: 1.6s !important;
+    animation-iteration-count: infinite !important;
+  }
+}

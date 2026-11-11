@@ -1,0 +1,13 @@
+<textarea
+  class="control"
+  [attr.id]="inputId() || null"
+  [rows]="rows()"
+  [value]="value()"
+  [placeholder]="placeholder()"
+  [disabled]="isDisabled()"
+  [class.is-invalid]="invalid()"
+  [attr.aria-invalid]="invalid() ? 'true' : null"
+  [attr.aria-describedby]="describedBy() || null"
+  (input)="onInput($event)"
+  (blur)="notifyTouched()"
+></textarea>

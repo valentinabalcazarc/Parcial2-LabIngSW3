@@ -1,0 +1,35 @@
+:host {
+  display: block;
+}
+
+.select {
+  position: relative;
+}
+
+/* Flecha dibujada con CSS: así el átomo no depende de otros átomos */
+.select::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: var(--space-4);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid var(--color-ink-muted);
+  border-bottom: 2px solid var(--color-ink-muted);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+.select .control {
+  appearance: none;
+  padding-right: var(--space-10);
+  cursor: pointer;
+}
+
+.select .control.is-placeholder {
+  color: var(--color-ink-muted);
+}
+
+.select option {
+  color: var(--color-ink);
+}

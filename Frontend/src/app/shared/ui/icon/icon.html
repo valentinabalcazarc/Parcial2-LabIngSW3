@@ -1,0 +1,9 @@
+<span
+  class="icon"
+  [style.width.px]="size()"
+  [style.height.px]="size()"
+  [attr.role]="label() ? 'img' : null"
+  [attr.aria-label]="label() || null"
+  [attr.aria-hidden]="label() ? null : 'true'"
+  [innerHTML]="markup()"
+></span>

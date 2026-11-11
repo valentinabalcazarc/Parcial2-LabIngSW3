@@ -1,0 +1,44 @@
+/* Estilo compartido por input-text, textarea y select (clase .control) */
+.control {
+  display: block;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.625rem var(--space-3);
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.control::placeholder {
+  color: var(--color-ink-muted);
+}
+
+.control:hover:not(:disabled) {
+  border-color: var(--color-primary);
+}
+
+.control:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.control.is-invalid {
+  border-color: var(--color-danger);
+}
+
+.control.is-invalid:focus {
+  box-shadow: var(--focus-ring-danger);
+}
+
+.control:disabled {
+  color: var(--color-ink-muted);
+  background: var(--color-surface-alt);
+  cursor: not-allowed;
+}

@@ -1,0 +1,118 @@
+<main class="preview">
+  <app-heading [level]="1">Catálogo de átomos</app-heading>
+
+  <section class="preview__section">
+    <app-heading [level]="2">Logo</app-heading>
+    <div class="row">
+      <app-logo />
+      <div class="dark-bar"><app-logo [inverted]="true" /></div>
+      <app-logo [showText]="false" [size]="32" />
+    </div>
+  </section>
+
+  <section class="preview__section">
+    <app-heading [level]="2">Encabezados</app-heading>
+    <app-heading [level]="1">Heading 1</app-heading>
+    <app-heading [level]="2">Heading 2</app-heading>
+    <app-heading [level]="3">Heading 3</app-heading>
+    <app-heading [level]="4">Heading 4</app-heading>
+  </section>
+
+  <section class="preview__section">
+    <app-heading [level]="2">Botones y enlaces</app-heading>
+    <div class="row">
+      <app-button type="button" label="Primario" />
+      <app-button type="button" color="secondary" label="Secundario" />
+      <app-button type="button" color="ghost" label="Fantasma" />
+      <app-button type="button" color="danger" label="Peligro" />
+      <app-button type="button" [disabled]="true" label="Deshabilitado" />
+      <app-button type="button" [loading]="true" label="Guardando" />
+    </div>
+    <div class="row">
+      <app-button type="button" size="sm" label="Pequeño" />
+      <app-button type="button" size="lg" label="Grande" />
+      <app-button type="button">
+        <app-icon name="calendar-plus" [size]="18" />
+        Nueva cita
+      </app-button>
+    </div>
+    <div class="row">
+      <app-link to="/">Enlace de texto</app-link>
+      <app-link to="/" variant="nav" [exact]="true">
+        <app-icon name="home" [size]="18" />
+        Inicio (activo)
+      </app-link>
+    </div>
+  </section>
+
+  <section class="preview__section">
+    <app-heading [level]="2">Badges y spinner</app-heading>
+    <div class="row">
+      <app-badge>Paciente</app-badge>
+      <app-badge tone="neutral">Administrador</app-badge>
+      <app-badge tone="success">Completada</app-badge>
+      <app-badge tone="warning">Pendiente</app-badge>
+      <app-badge tone="danger">Cancelada</app-badge>
+      <app-spinner size="sm" />
+      <app-spinner />
+      <app-spinner size="lg" />
+    </div>
+  </section>
+
+  <section class="preview__section">
+    <app-heading [level]="2">Campos de formulario</app-heading>
+    <app-card>
+      <form class="form" (submit)="$event.preventDefault()">
+        <div class="field">
+          <app-label for="cedula" [required]="true">Cédula</app-label>
+          <app-input-text
+            inputId="cedula"
+            placeholder="Ej. 1061234567"
+            describedBy="cedula-error"
+            [formControl]="cedula"
+            [invalid]="cedula.invalid && cedula.touched"
+          />
+          @if (cedula.invalid && cedula.touched) {
+            <app-form-error id="cedula-error">La cédula debe tener al menos 6 caracteres.</app-form-error>
+          }
+        </div>
+        <div class="field">
+          <app-label for="especialidad" [required]="true">Especialidad</app-label>
+          <app-select
+            inputId="especialidad"
+            [options]="especialidades"
+            [formControl]="especialidad"
+            [invalid]="especialidad.invalid && especialidad.touched"
+          />
+        </div>
+        <div class="field">
+          <app-label for="motivo">Motivo de la cita</app-label>
+          <app-textarea inputId="motivo" placeholder="Describa brevemente el motivo" [formControl]="motivo" />
+        </div>
+        <app-button type="submit" label="Guardar" />
+      </form>
+    </app-card>
+  </section>
+
+  <section class="preview__section">
+    <app-heading [level]="2">Tabla reutilizable</app-heading>
+    <app-table caption="Citas médicas" [columns]="columnas" [rows]="citas">
+      <ng-template appTableCell="estado" let-row>
+        <app-badge [tone]="tono(row.estado)">{{ row.estado }}</app-badge>
+      </ng-template>
+    </app-table>
+    <app-table caption="Tabla vacía" [columns]="columnas" [rows]="[]" />
+  </section>
+
+  <section class="preview__section">
+    <app-heading [level]="2">Íconos</app-heading>
+    <div class="icons">
+      @for (name of iconNames; track name) {
+        <div class="icons__item">
+          <app-icon [name]="name" [size]="24" />
+          <span>{{ name }}</span>
+        </div>
+      }
+    </div>
+  </section>
+</main>

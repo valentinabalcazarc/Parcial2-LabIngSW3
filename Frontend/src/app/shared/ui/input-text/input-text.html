@@ -1,0 +1,14 @@
+<input
+  class="control"
+  [attr.id]="inputId() || null"
+  [type]="type()"
+  [value]="value()"
+  [placeholder]="placeholder()"
+  [disabled]="isDisabled()"
+  [class.is-invalid]="invalid()"
+  [attr.autocomplete]="autocomplete() || null"
+  [attr.aria-invalid]="invalid() ? 'true' : null"
+  [attr.aria-describedby]="describedBy() || null"
+  (input)="onInput($event)"
+  (blur)="notifyTouched()"
+/>

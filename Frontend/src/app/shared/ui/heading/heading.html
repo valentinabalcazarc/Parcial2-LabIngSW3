@@ -1,0 +1,25 @@
+<!-- El contenido se declara una sola vez y se reutiliza en cada nivel -->
+<ng-template #content><ng-content /></ng-template>
+
+@switch (level()) {
+  @case (1) {
+    <h1 class="heading" [attr.data-size]="size() ?? level()" [attr.data-align]="align()">
+      <ng-container [ngTemplateOutlet]="content" />
+    </h1>
+  }
+  @case (3) {
+    <h3 class="heading" [attr.data-size]="size() ?? level()" [attr.data-align]="align()">
+      <ng-container [ngTemplateOutlet]="content" />
+    </h3>
+  }
+  @case (4) {
+    <h4 class="heading" [attr.data-size]="size() ?? level()" [attr.data-align]="align()">
+      <ng-container [ngTemplateOutlet]="content" />
+    </h4>
+  }
+  @default {
+    <h2 class="heading" [attr.data-size]="size() ?? level()" [attr.data-align]="align()">
+      <ng-container [ngTemplateOutlet]="content" />
+    </h2>
+  }
+}

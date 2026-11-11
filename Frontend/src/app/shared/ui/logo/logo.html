@@ -1,0 +1,23 @@
+<span class="logo" [class.logo--inverted]="inverted()">
+  <svg
+    class="logo__mark"
+    viewBox="0 0 40 40"
+    [attr.width]="size()"
+    [attr.height]="size()"
+    [attr.role]="showText() ? null : 'img'"
+    [attr.aria-label]="showText() ? null : 'Clínica Piedra Azul'"
+    [attr.aria-hidden]="showText() ? 'true' : null"
+  >
+    <!-- Piedra facetada con cruz médica -->
+    <polygon class="logo__stone" points="20,2 35,11 35,29 20,38 5,29 5,11" />
+    <polygon class="logo__facet" points="20,2 35,11 20,20 5,11" />
+    <rect class="logo__cross" x="18" y="14" width="4" height="14" rx="1" />
+    <rect class="logo__cross" x="13" y="19" width="14" height="4" rx="1" />
+  </svg>
+  @if (showText()) {
+    <span class="logo__text">
+      <span class="logo__tagline">Clínica</span>
+      <span class="logo__name">Piedra Azul</span>
+    </span>
+  }
+</span>

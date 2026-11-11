@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+.label {
+  display: inline-block;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  color: var(--color-ink);
+}
+
+.label__required {
+  margin-left: var(--space-1);
+  color: var(--color-danger);
+}

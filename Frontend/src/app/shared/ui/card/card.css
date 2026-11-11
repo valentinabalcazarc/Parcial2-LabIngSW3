@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+:host([data-padding='md']) {
+  padding: var(--space-6);
+}
+
+:host([data-padding='lg']) {
+  padding: var(--space-8);
+}

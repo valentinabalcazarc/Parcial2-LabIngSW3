@@ -1,0 +1,61 @@
+:host {
+  display: inline-flex;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-ink);
+}
+
+.logo__mark {
+  flex: none;
+}
+
+.logo__stone {
+  fill: var(--color-primary);
+}
+.logo__facet {
+  fill: var(--color-primary-hover);
+}
+.logo__cross {
+  fill: var(--color-surface);
+}
+
+.logo__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo__tagline {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.logo__name {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.01em;
+}
+
+/* Versión invertida (fondo oscuro) */
+.logo--inverted {
+  color: var(--color-surface);
+}
+.logo--inverted .logo__stone {
+  fill: var(--color-surface);
+}
+.logo--inverted .logo__facet {
+  fill: var(--color-surface-alt);
+}
+.logo--inverted .logo__cross {
+  fill: var(--color-primary);
+}
+.logo--inverted .logo__tagline {
+  color: var(--color-surface-alt);
+}

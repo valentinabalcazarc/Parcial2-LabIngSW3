@@ -1,0 +1,9 @@
+<a
+  class="link"
+  [routerLink]="to()"
+  routerLinkActive="is-active"
+  [routerLinkActiveOptions]="{ exact: exact() }"
+  [attr.data-variant]="variant()"
+>
+  <ng-content />
+</a>

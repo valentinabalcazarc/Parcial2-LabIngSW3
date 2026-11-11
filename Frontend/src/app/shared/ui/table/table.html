@@ -1,0 +1,36 @@
+<div class="table-wrapper">
+  <table class="table">
+    @if (caption()) {
+      <caption class="sr-only">{{ caption() }}</caption>
+    }
+    <thead>
+      <tr>
+        @for (column of columns(); track column.key) {
+          <th scope="col" [attr.data-align]="column.align ?? 'left'">{{ column.header }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of rows(); track $index) {
+        <tr class="table__row" [style.animation-delay.ms]="($index < 10 ? $index : 10) * 40">
+          @for (column of columns(); track column.key) {
+            <td [attr.data-label]="column.header" [attr.data-align]="column.align ?? 'left'">
+              @if (cellTemplates().get(column.key); as template) {
+                <ng-container
+                  [ngTemplateOutlet]="template"
+                  [ngTemplateOutletContext]="{ $implicit: row, column: column }"
+                />
+              } @else {
+                {{ cellText(row, column) }}
+              }
+            </td>
+          }
+        </tr>
+      } @empty {
+        <tr>
+          <td class="table__empty" [attr.colspan]="columns().length">{{ emptyMessage() }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
