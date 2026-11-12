@@ -1,0 +1,19 @@
+<app-main-layout [user]="user()" (login)="goLogin()" (logout)="logout()">
+  <div class="page">
+    <app-page-header
+      title="Mis citas"
+      description="Consulte las citas médicas que tiene programadas."
+    />
+
+    @if (list.error()) {
+      <app-form-error>{{ list.error() }}</app-form-error>
+    }
+
+    <app-appointment-list
+      title="Mis citas médicas"
+      emptyMessage="Aún no tiene citas registradas."
+      [appointments]="list.items()"
+      [loading]="list.loading()"
+    />
+  </div>
+</app-main-layout>

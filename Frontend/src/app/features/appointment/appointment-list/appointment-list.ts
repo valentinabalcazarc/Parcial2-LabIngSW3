@@ -6,16 +6,10 @@ import {
   input,
   output,
 } from '@angular/core';
-import { formatIsoDate } from '../../../core';
+import { formatIsoDate, formatIsoTime, fullName, professionalTypeLabel } from '../../../core';
 import { TableWithTitle } from '../../../shared/common';
-import { Badge, BadgeTone, Button, TableCell, TableColumn } from '../../../shared/ui';
-import { Appointment, AppointmentStatus } from '../models/appointment.model';
-
-const STATUS_TONE: Record<AppointmentStatus, BadgeTone> = {
-  Programada: 'primary',
-  Completada: 'success',
-  Cancelada: 'danger',
-};
+import { Badge, Button, TableCell, TableColumn } from '../../../shared/ui';
+import { Appointment } from '../models/appointment.model';
 
 const FECHA: TableColumn<Appointment> = {
   key: 'fecha',
@@ -25,14 +19,16 @@ const FECHA: TableColumn<Appointment> = {
 const HORA: TableColumn<Appointment> = {
   key: 'hora',
   header: 'Hora',
-  value: (a) => a.hora?.slice(0, 5),
+  value: (a) => formatIsoTime(a.fecha),
 };
-const PACIENTE: TableColumn<Appointment> = { key: 'paciente', header: 'Paciente' };
+const PACIENTE: TableColumn<Appointment> = {
+  key: 'paciente',
+  header: 'Paciente',
+  value: (a) => fullName(a.paciente),
+};
 const RESTO: readonly TableColumn<Appointment>[] = [
-  { key: 'medico', header: 'Médico' },
-  { key: 'especialidad', header: 'Especialidad' },
-  { key: 'motivo', header: 'Motivo' },
-  { key: 'estado', header: 'Estado' },
+  { key: 'medico', header: 'Médico', value: (a) => fullName(a.profesional) },
+  { key: 'tipo', header: 'Tipo' },
 ];
 
 @Component({
@@ -64,7 +60,5 @@ export class AppointmentList {
     () => this.title() || (this.showPatient() ? 'Citas' : 'Mis citas'),
   );
 
-  protected tone(estado: AppointmentStatus | undefined): BadgeTone {
-    return (estado && STATUS_TONE[estado]) || 'neutral';
-  }
+  protected typeLabel = professionalTypeLabel;
 }

@@ -1,0 +1,15 @@
+<app-auth-layout>
+  <div class="login">
+    <header class="login__header">
+      <app-heading [level]="1" size="2">Iniciar sesión</app-heading>
+      <p class="login__lead">Ingrese con su cédula y contraseña para continuar.</p>
+    </header>
+
+    <app-login-form [loading]="loading()" [errorMessage]="error()" (submitted)="signIn($event)" />
+
+    <p class="login__footer">
+      ¿Solo desea conocer a nuestros especialistas?
+      <app-link to="/medicos">Ver médicos</app-link>
+    </p>
+  </div>
+</app-auth-layout>

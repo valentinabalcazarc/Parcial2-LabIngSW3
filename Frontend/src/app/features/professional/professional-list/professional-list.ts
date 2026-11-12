@@ -6,26 +6,29 @@ import {
   input,
   output,
 } from '@angular/core';
+import { fullName, professionalTypeLabel } from '../../../core';
 import { TableWithTitle } from '../../../shared/common';
 import { Badge, Button, TableCell, TableColumn } from '../../../shared/ui';
-import { Professional } from '../models/professional.model';
+import { Professional, PublicProfessional } from '../models/professional.model';
+
+/** Fila de la tabla: la variante `public` solo recibe nombre, apellido y tipo. */
+export type ProfessionalRow = PublicProfessional & Partial<Pick<Professional, 'id' | 'cedula' | 'email'>>;
 
 export type ProfessionalListVariant = 'public' | 'admin';
 
-const NOMBRE: TableColumn<Professional> = {
+const NOMBRE: TableColumn<ProfessionalRow> = {
   key: 'nombre',
   header: 'Nombre',
-  value: (p) => `${p.nombres} ${p.apellidos}`.trim(),
+  value: (p) => fullName(p),
 };
-const ESPECIALIDAD: TableColumn<Professional> = { key: 'especialidad', header: 'Especialidad' };
+const TIPO: TableColumn<ProfessionalRow> = { key: 'tipo', header: 'Tipo' };
 
-const PUBLIC_COLUMNS: readonly TableColumn<Professional>[] = [NOMBRE, ESPECIALIDAD];
-const ADMIN_COLUMNS: readonly TableColumn<Professional>[] = [
+const PUBLIC_COLUMNS: readonly TableColumn<ProfessionalRow>[] = [NOMBRE, TIPO];
+const ADMIN_COLUMNS: readonly TableColumn<ProfessionalRow>[] = [
   { key: 'cedula', header: 'Cédula' },
   NOMBRE,
-  ESPECIALIDAD,
-  { key: 'telefono', header: 'Teléfono' },
-  { key: 'correo', header: 'Correo' },
+  TIPO,
+  { key: 'email', header: 'Correo' },
 ];
 
 @Component({
@@ -37,7 +40,7 @@ const ADMIN_COLUMNS: readonly TableColumn<Professional>[] = [
   templateUrl: './professional-list.html',
 })
 export class ProfessionalList {
-  readonly professionals = input<readonly Professional[]>([]);
+  readonly professionals = input<readonly ProfessionalRow[]>([]);
   readonly variant = input<ProfessionalListVariant>('public');
   readonly loading = input(false, { transform: booleanAttribute });
   /** Si no se indica, usa "Nuestros médicos" (public) o "Médicos" (admin). */
@@ -55,4 +58,6 @@ export class ProfessionalList {
   protected readonly heading = computed(
     () => this.title() || (this.variant() === 'admin' ? 'Médicos' : 'Nuestros médicos'),
   );
+
+  protected typeLabel = professionalTypeLabel;
 }

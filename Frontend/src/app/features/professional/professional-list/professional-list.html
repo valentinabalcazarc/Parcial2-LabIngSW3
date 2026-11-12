@@ -9,9 +9,9 @@
     <app-button slot="actions" type="button" label="Nuevo médico" (click)="create.emit()" />
   }
 
-  <ng-template appTableCell="especialidad" let-row>
-    @if (row.especialidad) {
-      <app-badge>{{ row.especialidad }}</app-badge>
+  <ng-template appTableCell="tipo" let-row>
+    @if (row.tipo) {
+      <app-badge>{{ typeLabel(row.tipo) }}</app-badge>
     } @else {
       —
     }

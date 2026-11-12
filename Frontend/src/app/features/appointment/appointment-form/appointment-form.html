@@ -11,16 +11,16 @@
         label="Paciente"
         inputId="appointment-paciente"
         required
-        [control]="form.controls.pacienteId"
+        [control]="form.controls.cedulaPaciente"
         [messages]="pacienteMessages"
       >
         <app-select
           inputId="appointment-paciente"
-          formControlName="pacienteId"
+          formControlName="cedulaPaciente"
           placeholder="Seleccione un paciente"
           describedBy="appointment-paciente-error"
           [options]="patients()"
-          [invalid]="invalid(form.controls.pacienteId)"
+          [invalid]="invalid(form.controls.cedulaPaciente)"
         />
       </app-form-field>
 
@@ -28,16 +28,16 @@
         label="Médico"
         inputId="appointment-medico"
         required
-        [control]="form.controls.medicoId"
+        [control]="form.controls.cedulaProfesional"
         [messages]="medicoMessages"
       >
         <app-select
           inputId="appointment-medico"
-          formControlName="medicoId"
+          formControlName="cedulaProfesional"
           placeholder="Seleccione un médico"
           describedBy="appointment-medico-error"
           [options]="professionals()"
-          [invalid]="invalid(form.controls.medicoId)"
+          [invalid]="invalid(form.controls.cedulaProfesional)"
         />
       </app-form-field>
 
@@ -70,23 +70,6 @@
           formControlName="hora"
           describedBy="appointment-hora-error"
           [invalid]="invalid(form.controls.hora)"
-        />
-      </app-form-field>
-
-      <app-form-field
-        class="form__field--full"
-        label="Motivo de la cita"
-        inputId="appointment-motivo"
-        required
-        [control]="form.controls.motivo"
-        [messages]="motivoMessages"
-      >
-        <app-textarea
-          inputId="appointment-motivo"
-          formControlName="motivo"
-          placeholder="Describa brevemente el motivo de la consulta"
-          describedBy="appointment-motivo-error"
-          [invalid]="invalid(form.controls.motivo)"
         />
       </app-form-field>
     </div>

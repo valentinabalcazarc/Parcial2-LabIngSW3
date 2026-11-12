@@ -1,0 +1,19 @@
+<app-main-layout [user]="user()" (login)="goLogin()" (logout)="logout()">
+  <div class="page">
+    <app-page-header
+      title="Nuestros médicos"
+      description="Conozca a los especialistas que hacen parte de la Clínica Piedra Azul."
+    />
+
+    @if (list.error()) {
+      <app-form-error>{{ list.error() }}</app-form-error>
+    }
+
+    <app-professional-list
+      variant="public"
+      title="Equipo médico"
+      [professionals]="list.items()"
+      [loading]="list.loading()"
+    />
+  </div>
+</app-main-layout>

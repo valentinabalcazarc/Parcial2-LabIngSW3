@@ -20,9 +20,12 @@ import {
   CEDULA_MESSAGES,
   CEDULA_MIN_LENGTH,
   CEDULA_PATTERN,
-  PHONE_MESSAGES,
-  PHONE_PATTERN,
+  NEW_PASSWORD_MESSAGES,
+  PASSWORD_MIN_LENGTH,
+  ProfessionalType,
   debouncedAsyncValidator,
+  notBlank,
+  shouldShowErrors,
 } from '../../../core';
 import { FormField } from '../../../shared/common';
 import { Button, Card, FormError, InputText, Select, SelectOption } from '../../../shared/ui';
@@ -37,8 +40,8 @@ import { ProfessionalFormValue } from '../models/professional.model';
   templateUrl: './professional-form.html',
 })
 export class ProfessionalForm {
-  /** Opciones del select de especialidad (las entrega la página). */
-  readonly specialties = input<readonly SelectOption[]>([]);
+  /** Opciones del select de tipo de profesional (las entrega la página). */
+  readonly types = input<readonly SelectOption[]>([]);
   /**
    * Validador asíncrono de existencia de cédula (lo aporta la página con su servicio).
    * Debe devolver `{ cedulaTaken: true }` si la cédula ya existe, o `null` si está libre.
@@ -64,22 +67,19 @@ export class ProfessionalForm {
       ],
       asyncValidators: [debouncedAsyncValidator(() => this.cedulaValidator())],
     }),
-    nombres: new FormControl('', {
+    nombre: new FormControl('', { nonNullable: true, validators: [Validators.required, notBlank()] }),
+    apellido: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(2), Validators.maxLength(60)],
+      validators: [Validators.required, notBlank()],
     }),
-    apellidos: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.minLength(2), Validators.maxLength(60)],
-    }),
-    especialidad: new FormControl<string | number | null>(null, [Validators.required]),
-    telefono: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.pattern(PHONE_PATTERN)],
-    }),
-    correo: new FormControl('', {
+    tipo: new FormControl<string | number | null>(null, [Validators.required]),
+    email: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.email],
+    }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(PASSWORD_MIN_LENGTH)],
     }),
   });
 
@@ -93,19 +93,19 @@ export class ProfessionalForm {
   });
 
   protected readonly cedulaMessages = CEDULA_MESSAGES;
-  protected readonly phoneMessages = PHONE_MESSAGES;
-  protected readonly nombresMessages = { required: 'Los nombres son obligatorios.' };
-  protected readonly apellidosMessages = { required: 'Los apellidos son obligatorios.' };
-  protected readonly especialidadMessages = { required: 'Seleccione una especialidad.' };
-  protected readonly correoMessages = {
+  protected readonly passwordMessages = NEW_PASSWORD_MESSAGES;
+  protected readonly nombreMessages = { required: 'El nombre es obligatorio.' };
+  protected readonly apellidoMessages = { required: 'El apellido es obligatorio.' };
+  protected readonly tipoMessages = { required: 'Seleccione el tipo de profesional.' };
+  protected readonly emailMessages = {
     required: 'El correo es obligatorio.',
     email: 'Ingrese un correo electrónico válido.',
   };
 
-  /** Borde rojo solo cuando el control es inválido y ya fue tocado (mismo criterio que form-field). */
+  /** Borde rojo con el mismo criterio que form-field (inválido y modificado o tocado). */
   protected invalid(control: AbstractControl): boolean {
     this.formEvents();
-    return control.invalid && control.touched;
+    return shouldShowErrors(control);
   }
 
   protected onSubmit(): void {
@@ -116,11 +116,11 @@ export class ProfessionalForm {
     const value = this.form.getRawValue();
     this.submitted.emit({
       cedula: value.cedula.trim(),
-      nombres: value.nombres.trim(),
-      apellidos: value.apellidos.trim(),
-      especialidad: String(value.especialidad),
-      telefono: value.telefono.trim(),
-      correo: value.correo.trim(),
+      nombre: value.nombre.trim(),
+      apellido: value.apellido.trim(),
+      email: value.email.trim(),
+      password: value.password,
+      tipo: value.tipo as ProfessionalType,
     });
   }
 

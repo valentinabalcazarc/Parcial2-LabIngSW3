@@ -24,85 +24,86 @@
       </app-form-field>
 
       <app-form-field
-        label="Nombres"
-        inputId="professional-nombres"
+        label="Nombre"
+        inputId="professional-nombre"
         required
-        [control]="form.controls.nombres"
-        [messages]="nombresMessages"
+        [control]="form.controls.nombre"
+        [messages]="nombreMessages"
       >
         <app-input-text
-          inputId="professional-nombres"
-          formControlName="nombres"
+          inputId="professional-nombre"
+          formControlName="nombre"
           autocomplete="given-name"
-          describedBy="professional-nombres-error"
-          [invalid]="invalid(form.controls.nombres)"
+          describedBy="professional-nombre-error"
+          [invalid]="invalid(form.controls.nombre)"
         />
       </app-form-field>
 
       <app-form-field
-        label="Apellidos"
-        inputId="professional-apellidos"
+        label="Apellido"
+        inputId="professional-apellido"
         required
-        [control]="form.controls.apellidos"
-        [messages]="apellidosMessages"
+        [control]="form.controls.apellido"
+        [messages]="apellidoMessages"
       >
         <app-input-text
-          inputId="professional-apellidos"
-          formControlName="apellidos"
+          inputId="professional-apellido"
+          formControlName="apellido"
           autocomplete="family-name"
-          describedBy="professional-apellidos-error"
-          [invalid]="invalid(form.controls.apellidos)"
+          describedBy="professional-apellido-error"
+          [invalid]="invalid(form.controls.apellido)"
         />
       </app-form-field>
 
       <app-form-field
-        label="Especialidad"
-        inputId="professional-especialidad"
+        label="Tipo de profesional"
+        inputId="professional-tipo"
         required
-        [control]="form.controls.especialidad"
-        [messages]="especialidadMessages"
+        [control]="form.controls.tipo"
+        [messages]="tipoMessages"
       >
         <app-select
-          inputId="professional-especialidad"
-          formControlName="especialidad"
-          placeholder="Seleccione una especialidad"
-          describedBy="professional-especialidad-error"
-          [options]="specialties()"
-          [invalid]="invalid(form.controls.especialidad)"
-        />
-      </app-form-field>
-
-      <app-form-field
-        label="Teléfono"
-        inputId="professional-telefono"
-        required
-        [control]="form.controls.telefono"
-        [messages]="phoneMessages"
-      >
-        <app-input-text
-          inputId="professional-telefono"
-          type="tel"
-          formControlName="telefono"
-          autocomplete="tel"
-          describedBy="professional-telefono-error"
-          [invalid]="invalid(form.controls.telefono)"
+          inputId="professional-tipo"
+          formControlName="tipo"
+          placeholder="Seleccione el tipo"
+          describedBy="professional-tipo-error"
+          [options]="types()"
+          [invalid]="invalid(form.controls.tipo)"
         />
       </app-form-field>
 
       <app-form-field
         label="Correo electrónico"
-        inputId="professional-correo"
+        inputId="professional-email"
         required
-        [control]="form.controls.correo"
-        [messages]="correoMessages"
+        [control]="form.controls.email"
+        [messages]="emailMessages"
       >
         <app-input-text
-          inputId="professional-correo"
+          inputId="professional-email"
           type="email"
-          formControlName="correo"
+          formControlName="email"
           autocomplete="email"
-          describedBy="professional-correo-error"
-          [invalid]="invalid(form.controls.correo)"
+          describedBy="professional-email-error"
+          [invalid]="invalid(form.controls.email)"
+        />
+      </app-form-field>
+
+      <app-form-field
+        label="Contraseña inicial"
+        inputId="professional-password"
+        required
+        hint="El médico la usará para iniciar sesión."
+        [control]="form.controls.password"
+        [messages]="passwordMessages"
+      >
+        <app-input-text
+          inputId="professional-password"
+          type="password"
+          formControlName="password"
+          autocomplete="new-password"
+          describedBy="professional-password-hint professional-password-error"
+          [invalid]="invalid(form.controls.password)"
         />
       </app-form-field>
     </div>

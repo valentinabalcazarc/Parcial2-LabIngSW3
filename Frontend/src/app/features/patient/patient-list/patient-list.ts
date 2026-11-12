@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, booleanAttribute, input, output } from '@angular/core';
-import { formatIsoDate } from '../../../core';
+import { formatIsoDate, fullName } from '../../../core';
 import { TableWithTitle } from '../../../shared/common';
 import { Button, TableColumn } from '../../../shared/ui';
 import { Patient } from '../models/patient.model';
@@ -27,14 +27,13 @@ export class PatientList {
     {
       key: 'nombre',
       header: 'Nombre',
-      value: (p) => `${p.nombres} ${p.apellidos}`.trim(),
+      value: (p) => fullName(p),
     },
-    { key: 'correo', header: 'Correo' },
-    { key: 'telefono', header: 'Teléfono' },
+    { key: 'email', header: 'Correo' },
     {
-      key: 'fechaNacimiento',
+      key: 'fechaNac',
       header: 'Fecha de nacimiento',
-      value: (p) => formatIsoDate(p.fechaNacimiento),
+      value: (p) => formatIsoDate(p.fechaNac),
     },
   ];
 }

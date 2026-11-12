@@ -1,0 +1,25 @@
+<app-main-layout [user]="user()" (login)="goLogin()" (logout)="logout()">
+  <div class="page">
+    <app-page-header
+      title="Crear cita médica"
+      description="Seleccione el paciente, el médico y el horario de la cita."
+    />
+
+    @if (catalogError()) {
+      <app-form-error>{{ catalogError() }}</app-form-error>
+    } @else if (loadingCatalog()) {
+      <div class="loading" aria-busy="true">
+        <app-spinner size="lg" label="Cargando pacientes y médicos…" />
+      </div>
+    } @else {
+      <app-appointment-form
+        [patients]="patientOptions()"
+        [professionals]="professionalOptions()"
+        [loading]="saving()"
+        [errorMessage]="error()"
+        (submitted)="save($event)"
+        (cancelled)="go('/admin/citas')"
+      />
+    }
+  </div>
+</app-main-layout>

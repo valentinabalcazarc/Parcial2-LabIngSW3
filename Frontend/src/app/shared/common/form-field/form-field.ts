@@ -8,6 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { shouldShowErrors } from '../../../core/validators/form-state';
 import { FormError, Label, Spinner } from '../../ui';
 
 
@@ -57,7 +58,7 @@ export class FormField {
   protected readonly errorMessage = computed<string | null>(() => {
     this.tick();
     const control = this.control();
-    if (!control.invalid || !control.touched) return null;
+    if (!shouldShowErrors(control)) return null;
     return this.resolveMessage(control.errors);
   });
 

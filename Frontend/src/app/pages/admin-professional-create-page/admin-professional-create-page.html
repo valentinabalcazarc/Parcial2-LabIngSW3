@@ -1,0 +1,17 @@
+<app-main-layout [user]="user()" (login)="goLogin()" (logout)="logout()">
+  <div class="page">
+    <app-page-header
+      title="Registrar médico"
+      description="Complete los datos del profesional. Los campos con * son obligatorios."
+    />
+
+    <app-professional-form
+      [types]="types"
+      [cedulaValidator]="cedulaValidator"
+      [loading]="saving()"
+      [errorMessage]="error()"
+      (submitted)="save($event)"
+      (cancelled)="go('/admin/medicos')"
+    />
+  </div>
+</app-main-layout>

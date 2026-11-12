@@ -1,18 +1,18 @@
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate aria-label="Inicio de sesión">
   <app-form-field
-    label="Correo electrónico"
-    inputId="login-correo"
+    label="Cédula"
+    inputId="login-cedula"
     required
-    [control]="form.controls.correo"
-    [messages]="correoMessages"
+    [control]="form.controls.cedula"
+    [messages]="cedulaMessages"
   >
     <app-input-text
-      inputId="login-correo"
-      type="email"
-      formControlName="correo"
-      autocomplete="email"
-      describedBy="login-correo-error"
-      [invalid]="invalid(form.controls.correo)"
+      inputId="login-cedula"
+      type="text"
+      formControlName="cedula"
+      autocomplete="username"
+      describedBy="login-cedula-error"
+      [invalid]="invalid(form.controls.cedula)"
     />
   </app-form-field>
 

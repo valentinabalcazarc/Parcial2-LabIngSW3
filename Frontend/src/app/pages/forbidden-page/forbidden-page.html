@@ -1,0 +1,14 @@
+<app-main-layout [user]="user()" (login)="goLogin()" (logout)="logout()">
+  <div class="status">
+    <app-card padding="lg" class="status__card">
+      <span class="status__icon status__icon--danger"><app-icon name="lock" [size]="32" /></span>
+      <p class="status__code">Error 403</p>
+      <app-heading [level]="1" align="center">Acceso denegado</app-heading>
+      <p class="status__text">
+        Su rol no tiene permiso para ver esta página. Si cree que es un error, comuníquese con la
+        administración de la clínica.
+      </p>
+      <app-button type="button" (click)="go(homeUrl())">Volver al inicio</app-button>
+    </app-card>
+  </div>
+</app-main-layout>

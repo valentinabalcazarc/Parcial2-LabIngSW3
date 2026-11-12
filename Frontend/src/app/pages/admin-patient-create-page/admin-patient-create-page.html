@@ -1,0 +1,16 @@
+<app-main-layout [user]="user()" (login)="goLogin()" (logout)="logout()">
+  <div class="page">
+    <app-page-header
+      title="Registrar paciente"
+      description="Complete los datos del paciente. La contraseña inicial le permitirá consultar sus citas."
+    />
+
+    <app-patient-form
+      [cedulaValidator]="cedulaValidator"
+      [loading]="saving()"
+      [errorMessage]="error()"
+      (submitted)="save($event)"
+      (cancelled)="go('/admin/pacientes')"
+    />
+  </div>
+</app-main-layout>

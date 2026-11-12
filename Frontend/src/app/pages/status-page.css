@@ -1,0 +1,48 @@
+/* Páginas de estado (403 y 404): tarjeta centrada con ícono, mensaje y acción. */
+:host {
+  display: block;
+}
+
+.status {
+  display: grid;
+  place-items: center;
+  padding: var(--space-8) 0;
+}
+
+.status__card {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 32rem;
+  text-align: center;
+}
+
+.status__icon {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  color: var(--color-primary);
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-full);
+}
+
+.status__icon--danger {
+  color: var(--color-danger);
+  background: var(--color-danger-soft);
+}
+
+.status__code {
+  margin: 0;
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.status__text {
+  max-width: 26rem;
+  color: var(--color-ink-muted);
+}

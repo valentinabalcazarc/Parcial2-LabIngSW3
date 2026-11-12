@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.unicauca.labsw3.core.capaServices.DTO.request.ProfesionalRequestDTO;
 import co.edu.unicauca.labsw3.core.capaServices.DTO.response.ProfesionalDTO;
+import co.edu.unicauca.labsw3.core.capaServices.DTO.response.ProfesionalPublicoDTO;
 import co.edu.unicauca.labsw3.core.capaServices.services.IProfesionalService;
 import jakarta.validation.Valid;
 
@@ -41,5 +42,10 @@ public class ProfesionalRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public ProfesionalDTO registrar(@Valid @RequestBody ProfesionalRequestDTO profesional) {
         return profesionalService.registrar(profesional);
+    }
+
+    @GetMapping("/publico")
+    public List<ProfesionalPublicoDTO> listarPublico() {
+        return profesionalService.listarPublico();
     }
 }

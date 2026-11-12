@@ -24,34 +24,34 @@
       </app-form-field>
 
       <app-form-field
-        label="Nombres"
-        inputId="patient-nombres"
+        label="Nombre"
+        inputId="patient-nombre"
         required
-        [control]="form.controls.nombres"
-        [messages]="nombresMessages"
+        [control]="form.controls.nombre"
+        [messages]="nombreMessages"
       >
         <app-input-text
-          inputId="patient-nombres"
-          formControlName="nombres"
+          inputId="patient-nombre"
+          formControlName="nombre"
           autocomplete="given-name"
-          describedBy="patient-nombres-error"
-          [invalid]="invalid(form.controls.nombres)"
+          describedBy="patient-nombre-error"
+          [invalid]="invalid(form.controls.nombre)"
         />
       </app-form-field>
 
       <app-form-field
-        label="Apellidos"
-        inputId="patient-apellidos"
+        label="Apellido"
+        inputId="patient-apellido"
         required
-        [control]="form.controls.apellidos"
-        [messages]="apellidosMessages"
+        [control]="form.controls.apellido"
+        [messages]="apellidoMessages"
       >
         <app-input-text
-          inputId="patient-apellidos"
-          formControlName="apellidos"
+          inputId="patient-apellido"
+          formControlName="apellido"
           autocomplete="family-name"
-          describedBy="patient-apellidos-error"
-          [invalid]="invalid(form.controls.apellidos)"
+          describedBy="patient-apellido-error"
+          [invalid]="invalid(form.controls.apellido)"
         />
       </app-form-field>
 
@@ -59,50 +59,33 @@
         label="Fecha de nacimiento"
         inputId="patient-nacimiento"
         required
-        [control]="form.controls.fechaNacimiento"
+        [control]="form.controls.fechaNac"
         [messages]="nacimientoMessages"
       >
         <app-input-text
           inputId="patient-nacimiento"
           type="date"
-          formControlName="fechaNacimiento"
+          formControlName="fechaNac"
           autocomplete="bday"
           describedBy="patient-nacimiento-error"
-          [invalid]="invalid(form.controls.fechaNacimiento)"
-        />
-      </app-form-field>
-
-      <app-form-field
-        label="Teléfono"
-        inputId="patient-telefono"
-        required
-        [control]="form.controls.telefono"
-        [messages]="phoneMessages"
-      >
-        <app-input-text
-          inputId="patient-telefono"
-          type="tel"
-          formControlName="telefono"
-          autocomplete="tel"
-          describedBy="patient-telefono-error"
-          [invalid]="invalid(form.controls.telefono)"
+          [invalid]="invalid(form.controls.fechaNac)"
         />
       </app-form-field>
 
       <app-form-field
         label="Correo electrónico"
-        inputId="patient-correo"
+        inputId="patient-email"
         required
-        [control]="form.controls.correo"
-        [messages]="correoMessages"
+        [control]="form.controls.email"
+        [messages]="emailMessages"
       >
         <app-input-text
-          inputId="patient-correo"
+          inputId="patient-email"
           type="email"
-          formControlName="correo"
+          formControlName="email"
           autocomplete="email"
-          describedBy="patient-correo-error"
-          [invalid]="invalid(form.controls.correo)"
+          describedBy="patient-email-error"
+          [invalid]="invalid(form.controls.email)"
         />
       </app-form-field>
 

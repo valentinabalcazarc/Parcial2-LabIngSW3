@@ -9,9 +9,9 @@
     <app-button slot="actions" type="button" label="Nueva cita" (click)="create.emit()" />
   }
 
-  <ng-template appTableCell="estado" let-row>
-    @if (row.estado) {
-      <app-badge [tone]="tone(row.estado)">{{ row.estado }}</app-badge>
+  <ng-template appTableCell="tipo" let-row>
+    @if (row.profesional?.tipo) {
+      <app-badge>{{ typeLabel(row.profesional.tipo) }}</app-badge>
     } @else {
       —
     }

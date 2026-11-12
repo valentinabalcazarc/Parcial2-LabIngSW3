@@ -6,7 +6,7 @@ import {
   input,
   output,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
   FormControl,
@@ -14,21 +14,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { notPastDate } from '../../../core';
+import { futureTimeToday, notPastDate, shouldShowErrors } from '../../../core';
 import { FormField } from '../../../shared/common';
-import {
-  Button,
-  Card,
-  FormError,
-  InputText,
-  Select,
-  SelectOption,
-  Textarea,
-} from '../../../shared/ui';
+import { Button, Card, FormError, InputText, Select, SelectOption } from '../../../shared/ui';
 import { AppointmentFormValue } from '../models/appointment.model';
 
 @Component({
-  imports: [ReactiveFormsModule, FormField, Card, Button, FormError, InputText, Select, Textarea],
+  imports: [ReactiveFormsModule, FormField, Card, Button, FormError, InputText, Select],
   selector: 'app-appointment-form',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,9 +28,9 @@ import { AppointmentFormValue } from '../models/appointment.model';
   templateUrl: './appointment-form.html',
 })
 export class AppointmentForm {
-  /** Opciones del select de paciente (las entrega la página). */
+  /** Opciones del select de paciente; el valor de cada opción es la cédula. */
   readonly patients = input<readonly SelectOption[]>([]);
-  /** Opciones del select de médico; la etiqueta puede incluir la especialidad. */
+  /** Opciones del select de médico; el valor de cada opción es la cédula. */
   readonly professionals = input<readonly SelectOption[]>([]);
   /** Guardando: deshabilita el envío y muestra el indicador de carga en el botón. */
   readonly loading = input(false, { transform: booleanAttribute });
@@ -50,18 +42,25 @@ export class AppointmentForm {
   readonly cancelled = output<void>();
 
   protected readonly form = new FormGroup({
-    pacienteId: new FormControl<string | number | null>(null, [Validators.required]),
-    medicoId: new FormControl<string | number | null>(null, [Validators.required]),
+    cedulaPaciente: new FormControl<string | number | null>(null, [Validators.required]),
+    cedulaProfesional: new FormControl<string | number | null>(null, [Validators.required]),
     fecha: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, notPastDate()],
     }),
-    hora: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    motivo: new FormControl('', {
+    // si la fecha es hoy, la hora también.
+    hora: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(5), Validators.maxLength(300)],
+      validators: [Validators.required, futureTimeToday('fecha')],
     }),
   });
+
+  constructor() {
+    // Al cambiar la fecha hay que volver a evaluar la hora (depende de si la fecha es hoy).
+    this.form.controls.fecha.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.form.controls.hora.updateValueAndValidity());
+  }
 
   /** Cambios del formulario como signal: mantiene al organismo (OnPush) al día con el estado. */
   private readonly formEvents = toSignal(this.form.events, { initialValue: null });
@@ -78,22 +77,34 @@ export class AppointmentForm {
     required: 'La fecha de la cita es obligatoria.',
     pastDate: 'La fecha de la cita no puede ser anterior a hoy.',
   };
-  protected readonly horaMessages = { required: 'La hora de la cita es obligatoria.' };
-  protected readonly motivoMessages = { required: 'Indique el motivo de la cita.' };
+  protected readonly horaMessages = {
+    required: 'La hora de la cita es obligatoria.',
+    pastTime: 'La hora de la cita debe ser posterior a la hora actual.',
+  };
 
-  /** Borde rojo solo cuando el control es inválido y ya fue tocado (mismo criterio que form-field). */
+  /** Borde rojo con el mismo criterio que form-field (inválido y modificado o tocado). */
   protected invalid(control: AbstractControl): boolean {
     this.formEvents();
-    return control.invalid && control.touched;
+    return shouldShowErrors(control);
   }
 
   protected onSubmit(): void {
-    const { pacienteId, medicoId, fecha, hora, motivo } = this.form.getRawValue();
-    if (!this.form.valid || this.loading() || pacienteId === null || medicoId === null) {
+    const { cedulaPaciente, cedulaProfesional, fecha, hora } = this.form.getRawValue();
+    if (
+      !this.form.valid ||
+      this.loading() ||
+      cedulaPaciente === null ||
+      cedulaProfesional === null
+    ) {
       this.form.markAllAsTouched();
       return;
     }
-    this.submitted.emit({ pacienteId, medicoId, fecha, hora, motivo: motivo.trim() });
+    this.submitted.emit({
+      cedulaPaciente: Number(cedulaPaciente),
+      cedulaProfesional: Number(cedulaProfesional),
+      fecha,
+      hora,
+    });
   }
 
   /** Limpia el formulario (la página lo usa tras un guardado exitoso). */

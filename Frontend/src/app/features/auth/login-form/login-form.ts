@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CEDULA_PATTERN, shouldShowErrors } from '../../../core';
 import { FormField } from '../../../shared/common';
 import { Button, FormError, InputText } from '../../../shared/ui';
 import { LoginCredentials } from '../models/auth.model';
@@ -29,9 +30,10 @@ export class LoginForm {
   readonly submitted = output<LoginCredentials>();
 
   protected readonly form = new FormGroup({
-    correo: new FormControl('', {
+    // El backend inicia sesión con la cédula y la contraseña.
+    cedula: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.email],
+      validators: [Validators.required, Validators.pattern(CEDULA_PATTERN)],
     }),
     // Sin reglas de longitud: al ingresar solo se exige que no esté vacía.
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
@@ -46,16 +48,16 @@ export class LoginForm {
     return this.form.valid;
   });
 
-  protected readonly correoMessages = {
-    required: 'El correo es obligatorio.',
-    email: 'Ingrese un correo electrónico válido.',
+  protected readonly cedulaMessages = {
+    required: 'La cédula es obligatoria.',
+    pattern: 'La cédula solo debe contener números.',
   };
   protected readonly passwordMessages = { required: 'La contraseña es obligatoria.' };
 
-  /** Borde rojo solo cuando el control es inválido y ya fue tocado (mismo criterio que form-field). */
+  /** Borde rojo con el mismo criterio que form-field (inválido y modificado o tocado). */
   protected invalid(control: AbstractControl): boolean {
     this.formEvents();
-    return control.invalid && control.touched;
+    return shouldShowErrors(control);
   }
 
   protected onSubmit(): void {
@@ -63,8 +65,8 @@ export class LoginForm {
       this.form.markAllAsTouched();
       return;
     }
-    const { correo, password } = this.form.getRawValue();
-    this.submitted.emit({ correo: correo.trim(), password });
+    const { cedula, password } = this.form.getRawValue();
+    this.submitted.emit({ cedula: cedula.trim(), password });
   }
 
   /** Limpia el formulario. */

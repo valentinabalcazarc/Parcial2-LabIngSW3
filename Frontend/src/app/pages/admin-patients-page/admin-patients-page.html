@@ -1,0 +1,16 @@
+<app-main-layout [user]="user()" (login)="goLogin()" (logout)="logout()">
+  <div class="page">
+    <app-page-header title="Pacientes" description="Pacientes registrados en la clínica.">
+      <app-button slot="actions" type="button" [fullWidth]="true" (click)="go('/admin/pacientes/nuevo')">
+        <app-icon name="user-plus" [size]="18" />
+        Nuevo paciente
+      </app-button>
+    </app-page-header>
+
+    @if (list.error()) {
+      <app-form-error>{{ list.error() }}</app-form-error>
+    }
+
+    <app-patient-list title="Listado de pacientes" [patients]="list.items()" [loading]="list.loading()" />
+  </div>
+</app-main-layout>

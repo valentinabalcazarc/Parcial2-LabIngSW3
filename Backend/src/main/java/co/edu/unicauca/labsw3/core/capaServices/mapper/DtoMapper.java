@@ -9,6 +9,7 @@ import co.edu.unicauca.labsw3.core.capaAccesoADatos.models.User;
 import co.edu.unicauca.labsw3.core.capaServices.DTO.response.CitaDTO;
 import co.edu.unicauca.labsw3.core.capaServices.DTO.response.PacienteDTO;
 import co.edu.unicauca.labsw3.core.capaServices.DTO.response.ProfesionalDTO;
+import co.edu.unicauca.labsw3.core.capaServices.DTO.response.ProfesionalPublicoDTO;
 import co.edu.unicauca.labsw3.core.capaServices.DTO.response.UserDTO;
 
 /**
@@ -37,5 +38,10 @@ public class DtoMapper {
     public CitaDTO toCitaDTO(Cita c) {
         return new CitaDTO(c.getId(), c.getFecha(), toPacienteDTO(c.getPaciente()),
                 toProfesionalDTO(c.getProfesional()));
+    }
+
+    public ProfesionalPublicoDTO toProfesionalPublicoDTO(Profesional p) {
+        User u = p.getUser();
+        return new ProfesionalPublicoDTO(u.getNombre(), u.getApellido(), p.getTipo());
     }
 }

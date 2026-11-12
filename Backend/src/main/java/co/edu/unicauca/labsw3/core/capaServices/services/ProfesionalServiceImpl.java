@@ -11,6 +11,7 @@ import co.edu.unicauca.labsw3.core.capaAccesoADatos.models.User;
 import co.edu.unicauca.labsw3.core.capaAccesoADatos.repositories.IProfesionalRepository;
 import co.edu.unicauca.labsw3.core.capaServices.DTO.request.ProfesionalRequestDTO;
 import co.edu.unicauca.labsw3.core.capaServices.DTO.response.ProfesionalDTO;
+import co.edu.unicauca.labsw3.core.capaServices.DTO.response.ProfesionalPublicoDTO;
 import co.edu.unicauca.labsw3.core.capaServices.mapper.DtoMapper;
 
 @Service
@@ -41,5 +42,14 @@ public class ProfesionalServiceImpl implements IProfesionalService {
             profesionalesDTO.add(mapper.toProfesionalDTO(profesional));
         }
         return profesionalesDTO;
+    }
+
+    @Override
+    public List<ProfesionalPublicoDTO> listarPublico() {
+        List<ProfesionalPublicoDTO> lista = new ArrayList<>();
+        for (Profesional p : profesionalRepository.findAll()) {
+            lista.add(mapper.toProfesionalPublicoDTO(p));
+        }
+        return lista;
     }
 }

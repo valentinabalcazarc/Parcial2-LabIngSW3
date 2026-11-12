@@ -1,20 +1,14 @@
-export type AppointmentStatus = 'Programada' | 'Completada' | 'Cancelada';
+export type { Appointment } from '../../../core';
 
-export interface Appointment {
-  id: number | string;
-  fecha: string;
-  hora: string;
-  paciente?: string;
-  medico: string;
-  especialidad: string;
-  motivo: string;
-  estado?: AppointmentStatus;
-}
-
+/**
+ * Valor que emite `appointment-form`. El backend recibe paciente y médico por cédula y la fecha
+ * como una sola cadena `yyyy-MM-ddTHH:mm:ss`; el servicio une `fecha` y `hora`.
+ */
 export interface AppointmentFormValue {
-  pacienteId: string | number;
-  medicoId: string | number;
+  cedulaPaciente: number;
+  cedulaProfesional: number;
+  /** yyyy-MM-dd */
   fecha: string;
+  /** HH:mm */
   hora: string;
-  motivo: string;
 }

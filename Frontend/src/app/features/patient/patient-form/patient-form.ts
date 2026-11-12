@@ -20,16 +20,16 @@ import {
   CEDULA_MESSAGES,
   CEDULA_MIN_LENGTH,
   CEDULA_PATTERN,
-  PHONE_MESSAGES,
-  PHONE_PATTERN,
+  NEW_PASSWORD_MESSAGES,
+  PASSWORD_MIN_LENGTH,
   debouncedAsyncValidator,
-  notFutureDate,
+  mustBePastDate,
+  notBlank,
+  shouldShowErrors,
 } from '../../../core';
 import { FormField } from '../../../shared/common';
 import { Button, Card, FormError, InputText } from '../../../shared/ui';
 import { PatientFormValue } from '../models/patient.model';
-
-const PASSWORD_MIN_LENGTH = 8;
 
 @Component({
   imports: [ReactiveFormsModule, FormField, Card, Button, FormError, InputText],
@@ -65,23 +65,16 @@ export class PatientForm {
       ],
       asyncValidators: [debouncedAsyncValidator(() => this.cedulaValidator())],
     }),
-    nombres: new FormControl('', {
+    nombre: new FormControl('', { nonNullable: true, validators: [Validators.required, notBlank()] }),
+    apellido: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(2), Validators.maxLength(60)],
+      validators: [Validators.required, notBlank()],
     }),
-    apellidos: new FormControl('', {
+    fechaNac: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(2), Validators.maxLength(60)],
+      validators: [Validators.required, mustBePastDate()],
     }),
-    fechaNacimiento: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required, notFutureDate()],
-    }),
-    telefono: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.pattern(PHONE_PATTERN)],
-    }),
-    correo: new FormControl('', {
+    email: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.email],
     }),
@@ -101,26 +94,22 @@ export class PatientForm {
   });
 
   protected readonly cedulaMessages = CEDULA_MESSAGES;
-  protected readonly phoneMessages = PHONE_MESSAGES;
-  protected readonly nombresMessages = { required: 'Los nombres son obligatorios.' };
-  protected readonly apellidosMessages = { required: 'Los apellidos son obligatorios.' };
+  protected readonly nombreMessages = { required: 'El nombre es obligatorio.' };
+  protected readonly apellidoMessages = { required: 'El apellido es obligatorio.' };
   protected readonly nacimientoMessages = {
     required: 'La fecha de nacimiento es obligatoria.',
-    futureDate: 'La fecha de nacimiento no puede ser futura.',
+    notPast: 'La fecha de nacimiento debe ser anterior a hoy.',
   };
-  protected readonly correoMessages = {
+  protected readonly emailMessages = {
     required: 'El correo es obligatorio.',
     email: 'Ingrese un correo electrónico válido.',
   };
-  protected readonly passwordMessages = {
-    required: 'La contraseña inicial es obligatoria.',
-    minlength: `La contraseña debe tener al menos ${PASSWORD_MIN_LENGTH} caracteres.`,
-  };
+  protected readonly passwordMessages = NEW_PASSWORD_MESSAGES;
 
-  /** Borde rojo solo cuando el control es inválido y ya fue tocado (mismo criterio que form-field). */
+  /** Borde rojo con el mismo criterio que form-field (inválido y modificado o tocado). */
   protected invalid(control: AbstractControl): boolean {
     this.formEvents();
-    return control.invalid && control.touched;
+    return shouldShowErrors(control);
   }
 
   protected onSubmit(): void {
@@ -131,11 +120,10 @@ export class PatientForm {
     const value = this.form.getRawValue();
     this.submitted.emit({
       cedula: value.cedula.trim(),
-      nombres: value.nombres.trim(),
-      apellidos: value.apellidos.trim(),
-      fechaNacimiento: value.fechaNacimiento,
-      telefono: value.telefono.trim(),
-      correo: value.correo.trim(),
+      nombre: value.nombre.trim(),
+      apellido: value.apellido.trim(),
+      fechaNac: value.fechaNac,
+      email: value.email.trim(),
       password: value.password,
     });
   }

@@ -1,0 +1,9 @@
+/* Estilos compartidos por las páginas con plantilla main-layout. */
+:host {
+  display: block;
+}
+
+.page {
+  display: grid;
+  gap: var(--space-6);
+}

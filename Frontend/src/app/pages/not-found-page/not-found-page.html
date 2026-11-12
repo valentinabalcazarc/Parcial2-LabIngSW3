@@ -1,0 +1,11 @@
+<app-main-layout [user]="user()" (login)="goLogin()" (logout)="logout()">
+  <div class="status">
+    <app-card padding="lg" class="status__card">
+      <span class="status__icon"><app-icon name="search" [size]="32" /></span>
+      <p class="status__code">Error 404</p>
+      <app-heading [level]="1" align="center">Página no encontrada</app-heading>
+      <p class="status__text">La dirección que ingresó no existe o fue movida.</p>
+      <app-button type="button" (click)="go(homeUrl())">Volver al inicio</app-button>
+    </app-card>
+  </div>
+</app-main-layout>
